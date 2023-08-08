@@ -1,4 +1,4 @@
-package com.api.gamerating;
+package com.api.gamerating.controllers;
 
 import com.api.gamerating.repository.UserRepository;
 import net.minidev.json.JSONObject;

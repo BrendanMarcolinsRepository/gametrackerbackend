@@ -8,7 +8,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -54,5 +56,31 @@ public class GameServiceImpl implements GameService {
         }
 
         return gameRepository.findGameByName(name);
+    }
+
+    @Override
+    public List<Game> findGamesByDatesOrderedLatest(String value) {
+
+        /* Not useful just some practice - better sorting in
+           through the database
+        List<Game> games;
+
+        try{
+            games = gameRepository.findAllGames();
+            games.sort(Comparator.comparing(Game::getReleaseDate));
+            return games;
+        }catch (Exception e){
+            return null;
+        }
+
+         */
+
+        return gameRepository.findGamesByDatesOrderedLatest(value);
+
+    }
+
+    @Override
+    public List<Game> findGamesByTitleOrderedLatest(String value) {
+        return gameRepository.findGamesByTitleOrderedLatest(value);
     }
 }

@@ -1,4 +1,4 @@
-package com.api.gamerating;
+package com.api.gamerating.controllers;
 
 import com.api.gamerating.repository.GameRepository;
 import org.junit.jupiter.api.Test;
@@ -76,6 +76,30 @@ public class GameControllerTest {
 
         final String rating = "L";
         mockMvc.perform(MockMvcRequestBuilders.get("/api/game/rating/"+rating)).andExpect(null);
+    }
+
+    @Test
+    public void findGamesByDatesOrdered() throws Exception {
+
+        final String order = "latest"; // or oldest
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/game/order/date/"+order))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(2)));
+
+
+    }
+
+    @Test
+    public void findGamesByTitledOrdered() throws Exception {
+
+        final String order = "A-Z"; // or oldest
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/game/order/title/"+order))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(2)));
+
+
     }
 
 

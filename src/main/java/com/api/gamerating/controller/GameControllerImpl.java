@@ -70,6 +70,18 @@ public class GameControllerImpl {
 
     }
 
+    @GetMapping("/game/order/date/{value}")
+    public List<Game> findGamesByDatesOrdered(@PathVariable String value){
+        return gameService.findGamesByDatesOrderedLatest(value);
+
+    }
+
+    @GetMapping("/game/order/title/{value}")
+    public List<Game> findGamesByTitleOrdered(@PathVariable String value){
+        return gameService.findGamesByTitleOrderedLatest(value);
+
+    }
+
     @DeleteMapping("/game/{gameId}")
     public void deleteGame(int id) {
         gameService.deleteGame(id);

@@ -16,4 +16,8 @@ public interface GameService {
     List<Game> findGameByRating(int id);
 
     List<Game> findGameByName(String name);
+
+    List<Game> findGamesByDatesOrderedLatest(String latest);
+
+    List<Game> findGamesByTitleOrderedLatest(String value);
 }
