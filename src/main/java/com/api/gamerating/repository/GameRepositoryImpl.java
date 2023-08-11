@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -107,6 +108,21 @@ public class GameRepositoryImpl implements  GameRepository{
 
 
         return query.getResultList();
+    }
+
+    @Override
+    public List<Game> findGameByCategory(List<Integer> value) {
+
+        List<Game> games = Arrays.asList();
+
+        value.forEach(n -> {
+
+            Game game = entityManager.find(Game.class, n);
+            games.add(game);
+
+        });
+
+        return games;
     }
     /*
     @Override

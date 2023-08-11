@@ -1,5 +1,6 @@
 package com.api.gamerating.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,13 +15,16 @@ public class Category {
     @Column(name="title")
     private String title;
 
+
     @ManyToOne(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,
             CascadeType.REFRESH
     })
+
     @JoinColumn(name = "game_id")
+    @JsonBackReference
     private Game game;
 
     public Category() {

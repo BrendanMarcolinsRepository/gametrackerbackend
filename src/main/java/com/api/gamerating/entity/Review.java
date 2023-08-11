@@ -1,5 +1,7 @@
 package com.api.gamerating.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,10 +16,17 @@ public class Review {
     @Column(name="comment")
     private String comment;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    //need to change this cascade later
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
+    //need to change this cascade later
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "game_id")
+    @JsonBackReference
+    private Game game;
 
     public Review() {
     }
@@ -48,6 +57,14 @@ public class Review {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     @Override

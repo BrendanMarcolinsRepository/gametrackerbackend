@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -102,6 +102,58 @@ public class GameControllerTest {
 
     }
 
+    @Test
+    public void findGameByCategoryTestHttpRequest() throws Exception {
+        final String categoryTest = "Action";
 
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/game/category/"+categoryTest))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(2)));
+
+    }
+
+
+    @Test
+    public void findGameByCategoryNonExistentTestHttpRequest() throws Exception {
+        final String categoryTest = "Horror";
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/game/category/"+categoryTest))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").doesNotExist());
+
+
+
+
+    }
+
+
+    @Test
+    public void findReviewByGameTestHttpRequest() throws Exception {
+        final String gameReviewTest = "God Of War";
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/reviews/"+gameReviewTest))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(1)));
+
+
+
+
+    }
+
+    @Test
+    public void findReviewByGameNonExistentTestHttpRequest() throws Exception {
+        final String gameReviewTest = "Returnal";
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/reviews/"+gameReviewTest))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").doesNotExist());
+
+
+
+
+
+    }
 
 }

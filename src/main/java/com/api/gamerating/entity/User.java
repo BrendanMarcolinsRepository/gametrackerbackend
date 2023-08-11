@@ -1,6 +1,7 @@
 package com.api.gamerating.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -58,6 +59,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> role;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @JsonManagedReference
+    private List<Review> reviews;
+
     public User() {}
 
     public User(String username, String firstName, String lastName, String password, String email, boolean active) {
@@ -69,7 +75,7 @@ public class User {
         this.active = active;
     }
 
-    public User(String username, String firstName, String lastName, String password, String email, boolean active, List<Game> games, List<Role> roles) {
+    public User(String username, String firstName, String lastName, String password, String email, boolean active, List<Game> games, Collection<Role> role, List<Review> reviews) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -77,7 +83,8 @@ public class User {
         this.email = email;
         this.active = active;
         this.games = games;
-        this.role = roles;
+        this.role = role;
+        this.reviews = reviews;
     }
 
     public int getId() {
@@ -167,6 +174,25 @@ public class User {
         this.role = roles;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public Collection<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(Collection<Role> role) {
+        this.role = role;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     @Override
     public String toString() {

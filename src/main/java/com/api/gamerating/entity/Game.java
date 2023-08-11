@@ -1,7 +1,6 @@
 package com.api.gamerating.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -51,10 +50,12 @@ public class Game {
             CascadeType.PERSIST,
             CascadeType.REFRESH }
    )
+    @JsonManagedReference
     private List<Category> categories;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "game_id")
+    @JsonManagedReference
     private List<Review> reviews;
 
     @ManyToMany(
@@ -133,7 +134,7 @@ public class Game {
     public void setRating(Rating rating) {
         this.rating = rating;
     }
-/*
+
     public List<Category> getCategories() {
         return categories;
     }
@@ -170,7 +171,7 @@ public class Game {
         if(review != null){reviews.add(review);}
 
     }
-*/
+
     public List<User> getUsers() {
         return users;
     }

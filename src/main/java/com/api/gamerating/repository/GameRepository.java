@@ -21,4 +21,6 @@ public interface GameRepository {
     List<Game> findGamesByDatesOrderedLatest(String value);
 
     List<Game> findGamesByTitleOrderedLatest(String value);
+
+    List<Game> findGameByCategory(List<Integer> value);
 }

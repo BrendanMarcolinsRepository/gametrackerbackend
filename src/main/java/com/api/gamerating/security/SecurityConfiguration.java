@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/games", "/api/game/**","/api/games/**","/game/rating/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/**", "/api/game/**","/api/games/**","/game/rating/**").permitAll()
                         .anyRequest().authenticated())
         ;
         return http.build();
