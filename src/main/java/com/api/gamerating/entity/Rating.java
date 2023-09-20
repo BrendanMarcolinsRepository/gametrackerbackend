@@ -22,7 +22,7 @@ public class Rating {
     @Column(name="organisation")
     private String organisation;
     @JsonBackReference
-    @OneToOne(mappedBy = "rating", cascade = {
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "rating", orphanRemoval = true, cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,

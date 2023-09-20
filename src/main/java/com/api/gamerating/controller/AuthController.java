@@ -5,6 +5,7 @@ import com.api.gamerating.dto.SignUpDto;
 import com.api.gamerating.dto.UserDto;
 import com.api.gamerating.security.UserAuthProvider;
 import com.api.gamerating.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -39,8 +41,13 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<UserDto> register(@RequestBody @Valid SignUpDto user) {
+        System.out.println("User roles " + user.getRoles());
+
 
         UserDto createdUser = userService.register(user);
+
+        System.out.println("User roles 2  " + createdUser.toString());
+
         createdUser.setToken(userAuthenticationProvider.createToken(createdUser));
 
         System.out.println(createdUser);

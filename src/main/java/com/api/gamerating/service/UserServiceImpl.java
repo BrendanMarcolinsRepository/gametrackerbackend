@@ -4,29 +4,25 @@ import com.api.gamerating.dto.CredentialsDto;
 
 import com.api.gamerating.dto.SignUpDto;
 import com.api.gamerating.dto.UserDto;
-import com.api.gamerating.entity.Role;
 import com.api.gamerating.entity.User;
 import com.api.gamerating.exceptions.AppException;
 import com.api.gamerating.mappers.UserMapper;
 import com.api.gamerating.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
-import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
- //implements UserService@RequiredArgsConstructor
+//implements UserService@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
+
     private final PasswordEncoder passwordEncoder;
 
      public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
@@ -66,9 +62,13 @@ public class UserServiceImpl implements UserService {
             throw new AppException("Username or Email already exist", HttpStatus.BAD_REQUEST);
         }
 
+        System.out.println("\t\t\tChecking user here ---- " + signUp);
+
         User user = userMapper.signUpToUser(signUp);
 
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUp.getPassword())));
+
+        System.out.println("\t\t\tChecking user here ---- " + user);
 
         User savedeUser = userRepository.save(user);
 

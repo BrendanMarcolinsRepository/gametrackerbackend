@@ -1,5 +1,6 @@
 package com.api.gamerating.service;
 
+import com.api.gamerating.dto.GameDto;
 import com.api.gamerating.entity.Game;
 import com.api.gamerating.entity.Review;
 
@@ -25,4 +26,6 @@ public interface GameService {
     List<Game> findGameByCategory(List<Integer> value);
 
     List<Review> findReviewByGame(String value);
+
+    String addNonExistingGame(GameDto game);
 }

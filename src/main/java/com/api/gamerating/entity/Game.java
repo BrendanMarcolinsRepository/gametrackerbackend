@@ -24,7 +24,7 @@ public class Game {
     @Column(name="publisher")
     private String publisher;
 
-    @Column(name="description")
+    @Column(name="description", length = 22001)
     private String description;
 
     @Column(name="release_date")
@@ -53,7 +53,7 @@ public class Game {
     @JsonManagedReference
     private List<Category> categories;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "game_id")
     @JsonManagedReference
     private List<Review> reviews;

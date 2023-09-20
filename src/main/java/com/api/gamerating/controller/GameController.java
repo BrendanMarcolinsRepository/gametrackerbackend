@@ -1,20 +1,18 @@
 package com.api.gamerating.controller;
 
-import com.api.gamerating.entity.Category;
+import com.api.gamerating.dto.GameDto;
 import com.api.gamerating.entity.Game;
 import com.api.gamerating.entity.Rating;
 import com.api.gamerating.entity.Review;
 import com.api.gamerating.service.CategoryService;
 import com.api.gamerating.service.GameService;
 import com.api.gamerating.service.RatingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -92,18 +90,14 @@ public class GameController {
     }
 
     @GetMapping("/game/category/{value}")
-    public List<Game> findGameByCategory(@PathVariable String value){
-        List<Category> categories = categoryService.findCategoriesByTitleWithGames(value);
-        if(categories.isEmpty()){
+    public List<Object> findGameByCategory(@PathVariable String value){
 
-            return null;
+        if(categoryService.findCategoriesByTitleWithGames(value).get().isEmpty()){
+
+            return Collections.singletonList(HttpStatus.NO_CONTENT);
         }
 
-        List<Game> games = new ArrayList<>();
-        categories.forEach(n -> games.add(n.getGame()));
-        games.forEach(System.out::println);
-        return games;
-
+        return Collections.singletonList(categoryService.findCategoriesByTitleWithGames(value).get());
     }
 
     @GetMapping("/reviews/{value}")
@@ -113,6 +107,10 @@ public class GameController {
 
     }
 
+    @PostMapping("/game")
+    public String addNonExisitingGame(@RequestBody @Valid GameDto tempGame){
+        return gameService.addNonExistingGame(tempGame);
+    }
 
 
 

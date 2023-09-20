@@ -44,6 +44,9 @@ public class GameRepositoryImpl implements  GameRepository{
     @Override
     @Transactional
     public void save(Game game) {
+
+        System.out.println("game description length =  " + game.getDescription().length());
+
         entityManager.persist(game);
     }
 
